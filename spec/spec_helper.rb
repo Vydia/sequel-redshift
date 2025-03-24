@@ -11,4 +11,4 @@ options = {
   force_standard_strings: false,
   logger: Logger.new(STDOUT)
 }
-DB = Sequel.connect('redshift://remind101:wvpfSzw2TT8COE@r101-dw-production.ck1sr65ao7pg.us-east-1.redshift.amazonaws.com:5439/test1', options)
+DB = Sequel.connect('redshift://foo:bar@test.abc123.us-east-1.redshift.amazonaws.com:5439/testdb', options)

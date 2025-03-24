@@ -1,4 +1,4 @@
-Copyright (c) 2013 Sergey Varaksin
+Copyright (c) 2025 Vydia Inc.
 
 MIT License
 

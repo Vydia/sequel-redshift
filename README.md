@@ -6,21 +6,30 @@ Amazon Redshift adapter for sequel.
 
 Add this line to your application's Gemfile:
 
-    gem 'sequel-redshift'
+    gem "sequel-redshift", git: "https://github.com/Vydia/sequel-redshift.git"
 
-And then execute:
+And then:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install sequel-redshift
 
 ## Usage
 
 connecting to the database
 
-    DB = Sequel.connect('redshift://#{database-url}', options = {})
+    DB = Sequel.connect('redshift://#{database-url}')
+
+    # or
+
+    DB = Sequel.connect(
+        {
+            adapter: 'redshift',
+            database: 'db',
+            username: 'foo',
+            password: 'bar',
+            host: 'redshift://#{database-url}',
+            port: '5439',
+        },
+    )
 
 querying records
 
@@ -29,11 +38,3 @@ querying records
 inserting records
 
     DB[:table].insert(key: value)
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
