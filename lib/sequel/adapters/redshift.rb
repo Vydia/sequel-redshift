@@ -11,7 +11,7 @@ module Sequel
       set_adapter_scheme :redshift
 
       def server_version(server=nil)
-        # Because Redshift is a service, its rare to have code that would handle 'older versions' of Redshift,
+        # Because Redshift is a service, it's rare to have code that would handle 'older versions' of Redshift,
         # as often the user has little to no choice over which version of Redshift they can use.
         #
         # Further more, Redshift Serverless will charge per-query.
