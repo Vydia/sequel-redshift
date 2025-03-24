@@ -57,11 +57,14 @@ module Sequel
       end
 
       def server_version(server=nil)
-        return 797979797
-        # return @server_version if @server_version
-        # ds = dataset
-        # ds = ds.server(server) if server
-        # @server_version = swallow_database_error{ds.with_sql("SELECT CAST(current_setting('server_version_num') AS integer) AS v").single_value} || 0
+        # Example version(): PostgreSQL 8.0.2 on i686-pc-linux-gnu, compiled by GCC gcc (GCC) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3), Redshift 1.0.107351
+        # version_str = swallow_database_error{ds.with_sql("select version() AS v").single_value}
+        # version_str = version_str.split(",").select{|s|s.downcase.include?("redshift")}.first
+        # version_str = version_str.gsub(/[^0-9]/, '')
+        # version_int = version_str.to_i rescue 0
+        # return version_int
+        return @server_version if @server_version
+        return 0
       end
     end
 
