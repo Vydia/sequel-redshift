@@ -10,52 +10,6 @@ module Sequel
 
       set_adapter_scheme :redshift
 
-      DIST_KEY = ' DISTKEY'.freeze
-      SORT_KEY = ' SORTKEY'.freeze
-
-      # The order of column modifiers to use when defining a column.
-      COLUMN_DEFINITION_ORDER = [:collate, :default, :primary_key, :dist_key, :sort_key, :null, :unique, :auto_increment, :references]
-
-      # We need to change these default settings because they correspond to
-      # Postgres configuration variables which do not exist in Redshift
-      def adapter_initialize
-        @opts.merge!(
-          force_standard_strings: false,
-          client_min_messages:    false
-        )
-        super
-      end
-
-      def column_definition_primary_key_sql(sql, column)
-        result = super
-        result << ' IDENTITY' if result
-        result
-      end
-
-      # Add DISTKEY SQL fragment to column creation SQL.
-      def column_definition_dist_key_sql(sql, column)
-        if column[:dist_key]
-          sql << DIST_KEY
-        end
-      end
-
-      # Add SORTKEY SQL fragment to column creation SQL.
-      def column_definition_sort_key_sql(sql, column)
-        if column[:sort_key]
-          sql << SORT_KEY
-        end
-      end
-
-      def serial_primary_key_options
-        # redshift doesn't support serial type
-        super.merge(serial: false)
-      end
-
-      # DROP TABLE IF EXISTS is not supported by Redshift
-      def supports_drop_table_if_exists?
-        false
-      end
-
       def server_version(server=nil)
         # Example version(): PostgreSQL 8.0.2 on i686-pc-linux-gnu, compiled by GCC gcc (GCC) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3), Redshift 1.0.107351
         # version_str = swallow_database_error{ds.with_sql("select version() AS v").single_value}
