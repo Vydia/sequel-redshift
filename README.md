@@ -16,6 +16,8 @@ And then:
 
 connecting to the database
 
+    require "sequel/redshift"
+
     DB = Sequel.connect('redshift://#{database-url}')
 
     # or
