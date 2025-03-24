@@ -34,7 +34,10 @@ module Sequel
 
       def initialize(*args)
         super(*args)
-        @opts = @opts.merge(:disable_insert_returning => true).freeze
+        @opts = @opts.merge(
+          :disable_insert_returning => true,
+          :force_standard_strings => false,
+        ).freeze
       end
 
       def insert_returning_sql(sql)
