@@ -11,6 +11,13 @@ module Sequel
       set_adapter_scheme :redshift
 
       def server_version(server=nil)
+        # Because Redshift is a service, its rare to have code that would handle 'older versions' of Redshift,
+        # as often the user has little to no choice over which version of Redshift they can use.
+        #
+        # Further more, Redshift Serverless will charge per-query.
+        # So this code is left as a TODO, where the default behavior is to skip finding version()
+        # (because it often doesn't matter) and causes extra charge for no gain.
+        #
         # Example version(): PostgreSQL 8.0.2 on i686-pc-linux-gnu, compiled by GCC gcc (GCC) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3), Redshift 1.0.107351
         # version_str = swallow_database_error{ds.with_sql("select version() AS v").single_value}
         # version_str = version_str.split(",").select{|s|s.downcase.include?("redshift")}.first
