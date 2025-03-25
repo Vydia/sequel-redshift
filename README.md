@@ -24,12 +24,15 @@ connecting to the database
 
     DB = Sequel.connect(
         {
-            adapter: 'redshift',
+            # Required for production
+            host: 'redshift://#{database-url}',
+            port: '5439',
             database: 'db',
             username: 'foo',
             password: 'bar',
-            host: 'redshift://#{database-url}',
-            port: '5439',
+            # Optional
+            adapter: 'redshift',
+            query_group: 'test', # See https://docs.aws.amazon.com/redshift/latest/dg/r_query_group.html
         },
     )
 
